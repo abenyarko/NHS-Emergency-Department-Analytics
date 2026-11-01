@@ -41,7 +41,7 @@ vignettes/*.pdf
 .env
 
 # pkgdown site
-docs/
+docs/ - Keep project documentation tracked
 
 # translation temp files
 po/*~
