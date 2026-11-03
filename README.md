@@ -331,7 +331,7 @@ Validation of source records, organizational identifiers, and reporting coverage
 
 ### Visualizations
 
-- [Average Daily NHS ED Attendances](images/average_daily_ed_attendances.jpeg)
+- [Average Daily NHS ED Attendances](https://github.com/abenyarko/NHS-Emergency-Department-Analytics/blob/main/images/Average%20Daily%20NHS%20ED%20Attendances.jpeg)
 
 The R and SQL scripts document the analytical methods used to prepare, validate, aggregate, and interpret the NHS emergency department data.
 
