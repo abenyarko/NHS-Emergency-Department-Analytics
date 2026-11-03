@@ -146,7 +146,7 @@ These measures provide a national-level baseline for examining emergency departm
 
 Average daily ED attendance fluctuated across the observation period, with generally higher levels toward the end of the study.
 
-![Average Daily NHS ED Attendances](images/average_daily_ed_attendances.jpeg)
+![Average Daily NHS ED Attendances](https://github.com/abenyarko/NHS-Emergency-Department-Analytics/blob/main/images/Average%20Daily%20NHS%20ED%20Attendances.jpeg)
 
 **Figure 1. Average Daily NHS Emergency Department Attendances, April 2016–March 2019.**
 
