@@ -1161,6 +1161,36 @@ bottom_10_providers %>%
   as_tibble() %>%
   print(n = 10)
 
+# Monthly attendance and breach performance
+demand_performance <- monthly_trends %>%
+  mutate(
+    average_daily_attendances =
+      total_attendances / lubridate::days_in_month(reporting_month)
+  ) %>%
+  select(
+    reporting_month,
+    average_daily_attendances,
+    breach_rate_pct
+  ) %>%
+  arrange(reporting_month)
+
+# Pearson correlation
+correlation_result <- cor.test(
+  demand_performance$average_daily_attendances,
+  demand_performance$breach_rate_pct,
+  method = "pearson"
+)
+
+# Display results
+print(correlation_result)
+
+# Examine months with the highest breach rates
+demand_performance %>%
+  arrange(desc(breach_rate_pct)) %>%
+  head(10) %>%
+  print()
+
+
 
 
 
