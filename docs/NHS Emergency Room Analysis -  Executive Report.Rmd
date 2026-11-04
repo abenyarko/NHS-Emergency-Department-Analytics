@@ -81,10 +81,11 @@ if (length(image_path) == 1 && !is.na(image_path)) {
 }
 
 ```
+Note: Average daily attendance represents monthly attendance divided by calendar days. Data are historical and have not been adjusted for changes in provider reporting coverage.
 
 **Increasing utilization.** Average daily attendance generally increased between April 2016 and March 2019. Several months during 2018 and early 2019 approached or exceeded **69,000 attendances per day**, compared with generally lower levels during 2016 and 2017. This is a descriptive pattern; a formal trend test was not conducted.
 
-**Substantial monthly variation.** The highest average daily attendance occurred in **July 2018 (approximately 70,319)**, while the lowest occurred in **January 2017 (approximately 61,138)**. The difference was approximately **9,181 daily attendances**, equivalent to **15.0%** of the lower value. Dividing monthly totals by calendar days improves comparisons across months of different lengths.Utilization was generally higher toward the end of the observation period, although no formal trend test was conducted.
+**Substantial monthly variation.** The highest average daily attendance occurred in July 2018 (approximately 70,319), while the lowest occurred in January 2017 (approximately 61,138). This represents a difference of approximately 9,181 daily attendances, or 15.0% relative to the lowest month. Normalizing monthly totals by calendar days improves comparability across reporting periods. 
 
 **Potential seasonal variation.** Repeated fluctuations, including declines around August in multiple years, suggest possible seasonal patterns. Formal time-series analysis would be required to establish seasonality.
 
@@ -122,9 +123,8 @@ Of **274 providers**, **190** reported across all 36 months and **84** had incom
 ```{r decision-table, echo=FALSE, message=FALSE, warning=FALSE}
 knitr::kable(
   data.frame(
-    Finding = c("Highest breach rates concentrated in December–March", "Near-zero national monthly attendance–breach correlation", "Provider reporting completeness and service scale vary"),
-    `Operational implication` = c("Potential winter performance pressures require examination", "Attendance alone is not an adequate performance proxy", "Unadjusted rankings can mislead"),
-    `Recommended action` = c("Review winter staffing, flow, and capacity alongside breach trends", "Track attendance and breach rate as separate, complementary KPIs", "Check reporting completeness and service mix before benchmarking"),
+    Finding = c("Highest breach rates concentrated in winter months (December–March)", "Near-zero national monthly attendance–breach correlation", "Provider reporting completeness varied"),
+    `Recommended action` = c("Review winter staffing, flow, and capacity alongside breach trends", "Monitor demand and performance as separate KPIs", "Apply reporting coverage and service type criteria to benchmarking"),
     check.names = FALSE
   ),
   align = "l"

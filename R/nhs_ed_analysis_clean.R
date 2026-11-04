@@ -1192,6 +1192,43 @@ demand_performance %>%
 
 
 
+# Import CSV files for PowerBI
+
+# Open existing NHS SQLite database
+db_path <- "data/er_utilization.sqlite"
+
+stopifnot(file.exists(db_path))
+
+con <- dbConnect(SQLite(), db_path)
+
+# Confirm table names
+dbListTables(con)
+
+# Read tables
+ed_activity <- dbReadTable(con, "nhs_er_activity")
+providers <- dbReadTable(con, "nhs_providers")
+
+# Create folder for Power BI data
+dir.create("powerbi", showWarnings = FALSE)
+
+# Export data
+write.csv(
+  ed_activity,
+  "powerbi/nhs_er_activity.csv",
+  row.names = FALSE
+)
+
+write.csv(
+  providers,
+  "powerbi/nhs_providers.csv",
+  row.names = FALSE
+)
+
+# Close connection
+dbDisconnect(con)
+
+cat("Power BI data exports completed successfully.\n")
+
 
 
 
