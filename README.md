@@ -45,6 +45,19 @@ The analysis focuses on national utilization trends, four-hour performance breac
 5. Were there identifiable seasonal patterns in emergency department performance?
 6. How did utilization and reporting completeness vary across NHS providers?
 
+
+## Project Deliverables
+
+- [Executive Decision-Support Report (PDF)](docs/NHS-Emergency-Room-Analysis----Executive-Report.pdf)
+- [Power BI Executive Dashboard (.pbix)](powerbi/NHS_Emergency_Department_Performance.pbix)
+- [Dashboard Screenshot](images/NHS%20Emergency%20Department%20Performance.png)
+- [R Analysis](R/nhs_ed_analysis_clean.R)
+- [SQL Analysis](sql/01_ed_utilization.sql)
+- [Executive Presentation Packet](https://github.com/abenyarko/NHS-Emergency-Department-Analytics/blob/main/docs/NHS_ED_Executive_Deliverable_Packet_Final.pdf)
+
+**Executive Presentation Packet:** A combined executive
+report and dashboard overview will be available in the
+docs folder.
 ## Data Sources
 
 ### NHS Emergency Department Activity
