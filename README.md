@@ -6,7 +6,7 @@ An end-to-end healthcare analytics portfolio project examining historical NHS em
 Executive Dashboard
 
 
-[View full-size dashboard](https://github.com/abenyarko/NHS-Emergency-Department-Analytics/blob/main/images/NHS%20Emergency%20Department%20Performance.png)
+![NHS Emergency Department Performance Dashboard](images/NHS%20Emergency%20Department%20Performance.png)
 
 
 Figure 1. PCC-inspired Power BI executive dashboard showing national ED utilization, performance, and provider comparisons. The image displays the complete historical period with slicers cleared.
