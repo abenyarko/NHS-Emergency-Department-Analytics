@@ -6,6 +6,8 @@ An end-to-end healthcare analytics portfolio project examining historical NHS em
 Executive Dashboard
 
 
+[View full-size dashboard](https://github.com/abenyarko/NHS-Emergency-Department-Analytics/blob/main/images/NHS%20Emergency%20Department%20Performance.png)
+
 
 Figure 1. PCC-inspired Power BI executive dashboard showing national ED utilization, performance, and provider comparisons. The image displays the complete historical period with slicers cleared.
 
@@ -21,7 +23,9 @@ Visual analyses:
 - Top 4 NHS Providers by Average Monthly Attendance: Interactive horizontal bar chart with reporting-coverage eligibility applied; rankings can change with slicer selections.
 The dashboard is intended for descriptive exploration and decision support, not real-time NHS monitoring. The historical correlation statistics reported below are not dynamically recalculated by the dashboard slicers.
 
-Power BI deliverable: [Open the Power BI project file](powerbi/NHS_Emergency_Department_Performance.pbix) (link becomes active after the .pbix file is uploaded to the repository).
+Power BI deliverable: [Open the Power BI project file](https://github.com/abenyarko/NHS-Emergency-Department-Analytics/blob/main/powerbi/NHS_Emergency_Department_Performance.pbix) 
+
+
 ## Executive Summary
 
 This project examines historical emergency department (ED) utilization and operational performance across National Health Service (NHS) healthcare organizations in England from **April 2016 through March 2019**.
