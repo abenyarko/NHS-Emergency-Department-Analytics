@@ -374,19 +374,22 @@ The following limitations should be considered when interpreting the findings:
 
 **Reproducibility note:** The cleaned R script has passed syntax validation, but a complete fresh-environment execution has not yet been verified. The SQLite database remains local, and the published scripts currently document the analytical workflow rather than providing a fully automated rebuild.
 
+
 ## Power BI Executive Dashboard
 
-A one-page Power BI dashboard is being developed to communicate the findings through:
+The interactive Power BI dashboard presents historical NHS emergency department utilization and operational performance from April 2016 through March 2019.
 
-- National ED utilization and performance KPIs.
-- Monthly average daily attendance trends.
-- Attendance versus four-hour breach-rate comparisons.
-- High-breach reporting months.
-- Department-level utilization.
-- Provider performance and reporting coverage.
-- Executive-level operational insights.
+![NHS Emergency Department Performance Dashboard](images/NHS%20Emergency%20Department%20Performance.png)
 
-The dashboard will be added to this repository when completed.
+**Dashboard Features:**
+- Six national utilization and performance KPIs.
+- Year, Month, ED Type, and NHS Provider slicers.
+- Monthly ED demand versus four-hour breach-rate trends.
+- Department-level attendance comparisons.
+- Top provider comparisons by average monthly attendance.
+
+The dashboard uses a PCC-inspired healthcare color palette and complements the Executive Decision-Support Report.
+
 
 ## Future Enhancements
 
