@@ -1,0 +1,168 @@
+---
+title: "NHS ED Executive Decision-Support Report"
+subtitle: "Executive Decision-Support Report | April 2016–March 2019"
+author: "Anthony Benyarko"
+date: "`r Sys.Date()`"
+output: 
+  pdf_document:
+    toc: false
+    number_sections: false
+    latex_engine: xelatex
+geometry: margin=0.82in
+fontsize: 10pt
+header-includes:
+  - \usepackage{xcolor}
+  - \definecolor{PCCBlue}{HTML}{008CC2}
+  - \definecolor{PCCNavy}{HTML}{173B56}
+  - \definecolor{PCCTeal}{HTML}{21A6A1}
+  - \definecolor{PCCGold}{HTML}{F4B400}
+  - \usepackage{titlesec}
+  - \titleformat{\section}{\Large\bfseries\color{PCCNavy}}{}{0em}{}
+  - \titleformat{\subsection}{\large\bfseries\color{PCCBlue}}{}{0em}{}
+  - \usepackage{fancyhdr}
+  - \pagestyle{fancy}
+  - \fancyhf{}
+  - \fancyfoot[C]{\thepage}
+  - \renewcommand{\headrulewidth}{0pt}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+
+
+```
+
+# Executive Summary
+
+This report examines historical National Health Service (NHS) emergency department (ED) utilization and operational performance in England from April 2016 through March 2019. The analysis draws on 12,765 aggregate activity records across 274 provider codes and 36 reporting months, with NHS Organisation Data Service reference information used for provider identification.
+
+Across the period, the dataset recorded **72,019,402 attendances**, **8,295,237 four-hour breaches**, and **13,493,280 admissions**. The overall four-hour breach rate was **11.52%**. Although average daily attendance fluctuated and was generally higher toward the end of the period, national monthly attendance and breach rates exhibited **virtually no linear correlation** (*r* = 0.0046). All 10 highest-breach months fell between **December and March**, suggesting a winter pattern worthy of further investigation.
+
+**Executive implication:** Monitor demand and performance together; examine winter operational pressures; and account for reporting completeness and service differences when comparing providers. These findings are descriptive and do not establish causal relationships.
+
+# Key Findings
+
+## 1. National ED utilization and performance
+
+
+```{r national-kpis, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(
+  data.frame(
+    `Performance indicator` = c("ED attendances", "Four-hour breaches", "Admissions", "Overall breach rate", "Admissions / attendances"),
+    `Historical result` = c("72,019,402", "8,295,237", "13,493,280", "11.52%", "18.74%"),
+    check.names = FALSE
+  ),
+  align = c("l", "r")
+)
+```
+
+These are aggregate national totals over the study period, not current NHS performance figures. The admissions-to-attendances measure is a ratio of aggregate recorded counts.
+
+\newpage
+
+## 2. Monthly demand varied substantially
+
+Average daily ED attendance fluctuated across the observation period, with generally higher levels toward the end of the study.
+
+```{r monthly-attendance-figure, fig.cap="Average Daily NHS Emergency Department Attendances, April 2016–March 2019", fig.align='center', out.width='68%',  echo=FALSE, message=FALSE, warning=FALSE}
+# Place the original GitHub README image in the project's images/ folder.
+# This works when the Rmd is saved inside reports/ and knitted from RStudio.
+image_candidates <- c(
+  "../images/Average Daily NHS ED Attendances.jpeg",
+  "images/Average Daily NHS ED Attendances.jpeg",
+  "../images/average_daily_ed_attendances.jpeg",
+  "images/average_daily_ed_attendances.jpeg"
+)
+image_path <- image_candidates[file.exists(image_candidates)][1]
+if (length(image_path) == 1 && !is.na(image_path)) {
+  knitr::include_graphics(image_path)
+} else {
+  cat("\\textit{Attendance graph not found. Save 'Average Daily NHS ED Attendances.jpeg' in the project's images folder.}")
+}
+
+```
+
+**Increasing utilization.** Average daily attendance generally increased between April 2016 and March 2019. Several months during 2018 and early 2019 approached or exceeded **69,000 attendances per day**, compared with generally lower levels during 2016 and 2017. This is a descriptive pattern; a formal trend test was not conducted.
+
+**Substantial monthly variation.** The highest average daily attendance occurred in **July 2018 (approximately 70,319)**, while the lowest occurred in **January 2017 (approximately 61,138)**. The difference was approximately **9,181 daily attendances**, equivalent to **15.0%** of the lower value. Dividing monthly totals by calendar days improves comparisons across months of different lengths.Utilization was generally higher toward the end of the observation period, although no formal trend test was conducted.
+
+**Potential seasonal variation.** Repeated fluctuations, including declines around August in multiple years, suggest possible seasonal patterns. Formal time-series analysis would be required to establish seasonality.
+
+**Healthcare operational implication.** These trends can inform workforce scheduling, treatment capacity planning, resource allocation, and performance monitoring. Attendance patterns should be evaluated alongside four-hour breaches rather than interpreted as a direct measure of operational performance.
+
+## 3. Higher monthly demand did not consistently coincide with higher breach rates
+
+Across 36 national monthly observations, the Pearson correlation between average daily attendance and four-hour breach rate was **0.0046** (conventional *p* = 0.9787; 95% confidence interval: **−0.324 to 0.333**). This indicates virtually no observed **linear** relationship at the national monthly level. Because the data form a time series, the conventional significance test does not account for possible serial dependence or seasonality.
+
+## 4. High-breach months clustered in December–March
+
+All 10 months with the highest recorded four-hour breach rates occurred between December and March. The five highest were:
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(
+  data.frame(
+    Month = c("February 2019", "January 2019", "March 2018", "December 2017", "February 2018"),
+    `Breach rate` = c("15.77%", "15.65%", "15.38%", "15.01%", "14.96%"),
+    check.names = FALSE
+  ),
+  align = c("l", "r")
+)
+
+```
+
+
+January 2017 had the **lowest average daily attendance** yet a relatively high breach rate (**14.86%**). The winter concentration is an observation, not proof that season or weather caused breaches.
+
+## 5. Provider reporting and scale differed
+
+Of **274 providers**, **190** reported across all 36 months and **84** had incomplete reporting. Volume rankings were therefore restricted to the 190 complete reporters. Among them, Barts Health NHS Trust averaged approximately **40,877 monthly attendances**, compared with approximately **189** for Tetbury Hospital Trust Ltd. These figures describe **reported volume**, not clinical quality or efficiency; organizations may have substantially different service configurations.
+
+# Healthcare Decision Support
+
+```{r decision-table, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(
+  data.frame(
+    Finding = c("Highest breach rates concentrated in December–March", "Near-zero national monthly attendance–breach correlation", "Provider reporting completeness and service scale vary"),
+    `Operational implication` = c("Potential winter performance pressures require examination", "Attendance alone is not an adequate performance proxy", "Unadjusted rankings can mislead"),
+    `Recommended action` = c("Review winter staffing, flow, and capacity alongside breach trends", "Track attendance and breach rate as separate, complementary KPIs", "Check reporting completeness and service mix before benchmarking"),
+    check.names = FALSE
+  ),
+  align = "l"
+)
+
+```
+
+
+**Suggested leadership priority:** First, establish a combined demand-and-performance monitoring view; second, conduct a focused review of winter breach patterns; third, strengthen provider comparison rules. These are analytical recommendations for further assessment, not evidence that specific interventions will improve outcomes.
+
+# Conclusion and Next Steps
+
+The historical data show substantial ED utilization, meaningful variation in monthly demand, and a concentration of high four-hour breach rates during December–March. The absence of an overall national monthly linear correlation underscores the importance of assessing performance using more than attendance volume alone.
+
+Next steps are to present these measures in an interactive Power BI dashboard and, if suitable data become available, investigate seasonal and provider-level relationships using longitudinal models and operational covariates. No causal or contemporary performance conclusions are drawn from these historical aggregate records.
+
+\newpage
+
+# Appendix A: Data Sources
+
+- **Primary source:** `NHSRdatasets::ae_attendances`, aggregated NHS emergency department activity.
+- **Reporting period:** April 2016–March 2019 (36 months).
+- **Coverage:** 12,765 activity records; 274 provider codes.
+- **Core fields:** Reporting period, organization code, department type, attendances, breaches, admissions.
+- **Provider reference:** NHS Organisation Data Service (ODS) lookups for available organization information.
+- **Granularity:** Aggregate activity; no patient-level data.
+- **Department categories:** `1`, `2`, and `other`, retained as represented in the source data.
+
+# Appendix B: Analytical Methodology
+
+1. **Preparation:** Import and inspect activity records in R; review types, missing values, identifiers, and reporting periods.
+2. **Integration:** Enrich provider records using NHS ODS organization reference information.
+3. **Database:** Organize provider and monthly activity information in SQLite (`nhs_providers` and `nhs_er_activity`).
+4. **Validation:** Examine duplicate records, unusual activity counts, unmatched provider references, and completeness of monthly reporting.
+5. **Measures:** Calculate four-hour breach rate as total breaches divided by total attendances; average daily attendance as monthly attendances divided by calendar days.
+6. **Comparisons:** Rank provider activity volumes among organizations with all 36 months of reporting.
+7. **Association:** Use Pearson correlation to describe the national monthly linear relationship between average daily attendances and breach rate; interpret inference cautiously because monthly observations may not be independent.
+
+**Limitations:** Historical reporting, variable provider coverage, heterogeneous provider services, aggregate data, and possible time-series dependence restrict interpretation. The project does not establish causal relationships or current NHS performance.
+
+**Code and documentation:** [GitHub repository](https://github.com/abenyarko/NHS-Emergency-Department-Analytics) · [Cleaned R script](https://github.com/abenyarko/NHS-Emergency-Department-Analytics/blob/main/R/nhs_ed_analysis_clean.R) · [SQL analyses](https://github.com/abenyarko/NHS-Emergency-Department-Analytics/tree/main/sql)

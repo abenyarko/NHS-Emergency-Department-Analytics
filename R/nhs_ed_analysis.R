@@ -29,6 +29,8 @@ system('git config --global user.email "abenyarko@gmail.com"')
 system("git config --global user.name")
 system("git config --global user.email")
 
+getwd()
+
 folders <- c(
   "R",
   "sql",
@@ -1254,6 +1256,37 @@ bottom_10_providers %>%
   as_tibble() %>%
   print(n = 10)
 
+# New Section to aid analysis 
+
+# Monthly attendance and breach performance
+demand_performance <- monthly_trends %>%
+  mutate(
+    average_daily_attendances =
+      total_attendances / lubridate::days_in_month(reporting_month)
+  ) %>%
+  select(
+    reporting_month,
+    average_daily_attendances,
+    breach_rate_pct
+  ) %>%
+  arrange(reporting_month)
+
+# Pearson correlation
+correlation_result <- cor.test(
+  demand_performance$average_daily_attendances,
+  demand_performance$breach_rate_pct,
+  method = "pearson"
+)
+
+# Display results
+print(correlation_result)
+
+# Examine months with the highest breach rates
+demand_performance %>%
+  arrange(desc(breach_rate_pct)) %>%
+  head(10) %>%
+  print()
+
 
 # Check the current GitHub connection
 system("git remote -v")
@@ -1377,3 +1410,243 @@ list.files(
 if (requireNamespace("rstudioapi", quietly = TRUE)) {
   rstudioapi::documentPath()
 }
+
+
+# Identify the original script
+source_file <- path.expand("~/nhs_ed_analysis.R")
+
+# Identify the destination inside your GitHub project
+destination_file <- file.path(
+  getwd(),
+  "R",
+  "nhs_ed_analysis.R"
+)
+
+# Confirm the original file exists
+file.exists(source_file)
+
+# Copy the script without deleting the original
+file.copy(
+  from = source_file,
+  to = destination_file,
+  overwrite = FALSE
+)
+
+# Verify the new file exists
+file.exists(destination_file)
+
+
+# List files in the R folder
+list.files("R")
+
+# Check Git status
+system("git status --short")
+
+
+# Search for SQL queries in your existing script
+script_lines <- readLines(
+  "R/nhs_ed_analysis.R",
+  warn = FALSE
+)
+
+grep(
+  "SELECT|CREATE TABLE|dbGetQuery|dbExecute",
+  script_lines,
+  value = TRUE,
+  ignore.case = TRUE
+)
+
+
+# Stage the R analysis script
+system("git add R/nhs_ed_analysis.R")
+
+# Review staged changes
+system("git diff --cached --stat")
+
+# Commit
+system(
+  'git commit -m "Add reproducible NHS ED analysis in R"'
+)
+
+# Push to GitHub
+system("git push origin main")
+
+
+
+# =====================================================
+# EXTRACT VALIDATED SQL QUERIES FROM R SCRIPT
+# =====================================================
+
+# Read the existing R script
+script_lines <- readLines(
+  "R/nhs_ed_analysis.R",
+  warn = FALSE
+)
+
+# Function to extract SQL from a dbGetQuery statement
+extract_sql <- function(object_name) {
+  
+  # Find the assignment containing the SQL query
+  pattern <- paste0(
+    "^\\s*",
+    object_name,
+    "\\s*<-\\s*dbGetQuery\\(con,\\s*\""
+  )
+  
+  start <- grep(pattern, script_lines)
+  
+  if (length(start) != 1) {
+    stop("Could not uniquely locate: ", object_name)
+  }
+  
+  # Find the closing quote and parenthesis
+  closing <- which(
+    trimws(script_lines) == '")' &
+      seq_along(script_lines) > start
+  )
+  
+  if (length(closing) == 0) {
+    stop("Missing SQL closing delimiter: ", object_name)
+  }
+  
+  end <- closing[1]
+  
+  # Extract only the SQL content
+  paste(
+    script_lines[(start + 1):(end - 1)],
+    collapse = "\n"
+  )
+}
+
+# Extract queries
+sql_national <- extract_sql("national_utilization")
+sql_type <- extract_sql("utilization_by_type")
+sql_monthly <- extract_sql("monthly_trends")
+sql_provider <- extract_sql("provider_performance")
+
+# Save SQL scripts
+writeLines(
+  c(
+    "-- National ED utilization",
+    sql_national,
+    ";",
+    "",
+    "-- ED utilization by department type",
+    sql_type,
+    ";"
+  ),
+  "sql/01_ed_utilization.sql"
+)
+
+writeLines(
+  c(
+    "-- Monthly ED utilization trends",
+    sql_monthly,
+    ";"
+  ),
+  "sql/02_monthly_trends.sql"
+)
+
+writeLines(
+  c(
+    "-- Provider-level ED performance",
+    sql_provider,
+    ";"
+  ),
+  "sql/03_provider_performance.sql"
+)
+
+# Verify the files were created
+list.files("sql", pattern = "\\.sql$")
+
+
+library(DBI)
+library(RSQLite)
+
+con <- dbConnect(
+  SQLite(),
+  "data/er_utilization.sqlite"
+)
+
+# Read and execute each SQL statement
+run_sql_file <- function(path) {
+  sql <- paste(readLines(path), collapse = "\n")
+  statements <- strsplit(sql, ";", fixed = TRUE)[[1]]
+  
+  lapply(
+    statements[nzchar(trimws(statements))],
+    function(query) dbGetQuery(con, query)
+  )
+}
+
+# Execute all three SQL files
+results_national <- run_sql_file(
+  "sql/01_ed_utilization.sql"
+)
+
+results_monthly <- run_sql_file(
+  "sql/02_monthly_trends.sql"
+)
+
+results_provider <- run_sql_file(
+  "sql/03_provider_performance.sql"
+)
+
+# Verify expected results
+stopifnot(
+  results_national[[1]]$total_attendances == 72019402,
+  nrow(results_national[[2]]) == 3,
+  nrow(results_monthly[[1]]) == 36,
+  nrow(results_provider[[1]]) == 274
+)
+
+print("All three SQL files passed validation.")
+
+dbDisconnect(con)
+
+
+system("git status --short")
+
+
+# Verify the three SQL files exist
+sql_files <- c(
+  "sql/01_ed_utilization.sql",
+  "sql/02_monthly_trends.sql",
+  "sql/03_provider_performance.sql"
+)
+
+file.exists(sql_files)
+
+# Check Git status
+system("git status --short")
+
+
+# Disable automatic GPG signing for this project only
+system("git config --local commit.gpgsign false")
+
+# Verify the setting
+system("git config --local --get commit.gpgsign")
+
+
+# Commit the three staged SQL files without GPG signing
+system(
+  'git -c commit.gpgsign=false commit --no-gpg-sign -m "Add validated NHS ED SQL analysis scripts"'
+)
+
+
+
+# Create a copy for cleaning
+file.copy(
+  "R/nhs_ed_analysis.R",
+  "R/nhs_ed_analysis_clean.R",
+  overwrite = FALSE
+)
+
+# Confirm the copy exists
+file.exists("R/nhs_ed_analysis_clean.R")
+
+
+file.edit("R/nhs_ed_analysis_clean.R")
+
+
+
