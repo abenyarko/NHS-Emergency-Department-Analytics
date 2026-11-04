@@ -55,9 +55,6 @@ The analysis focuses on national utilization trends, four-hour performance breac
 - [SQL Analysis](sql/01_ed_utilization.sql)
 - [Executive Presentation Packet](https://github.com/abenyarko/NHS-Emergency-Department-Analytics/blob/main/docs/NHS_ED_Executive_Deliverable_Packet_Final.pdf)
 
-**Executive Presentation Packet:** A combined executive
-report and dashboard overview will be available in the
-docs folder.
 ## Data Sources
 
 ### NHS Emergency Department Activity
