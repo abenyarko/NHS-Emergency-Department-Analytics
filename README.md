@@ -2,6 +2,26 @@
 
 **Healthcare Operations Analytics | R | SQL | SQLite | Power BI**
 
+An end-to-end healthcare analytics portfolio project examining historical NHS emergency department (ED) demand, four-hour performance, admissions, and provider reporting across England, April 2016–March 2019.
+Executive Dashboard
+
+
+
+Figure 1. PCC-inspired Power BI executive dashboard showing national ED utilization, performance, and provider comparisons. The image displays the complete historical period with slicers cleared.
+
+The one-page interactive Power BI dashboard turns aggregate NHS activity data into an executive-level operational view. Its light blue-gray background, navy headings, blue and teal chart lines, and restrained gold accents support clear visual hierarchy.
+
+Interactive filters: Year, Month, ED Type (1, 2, other), and NHS Provider.
+
+Key performance indicators: Total ED Attendances; Total Four-Hour Breaches; Four-Hour Breach Rate; Total Admissions; Admission Ratio; and Reporting Providers.
+
+Visual analyses:
+- Monthly ED Demand & Four-Hour Breach Rate: Dual-axis line chart comparing average daily attendance with breach rate across 36 months.
+- ED Attendances by Department Type: Column chart comparing reported utilization for types 1, 2, and other.
+- Top 4 NHS Providers by Average Monthly Attendance: Interactive horizontal bar chart with reporting-coverage eligibility applied; rankings can change with slicer selections.
+The dashboard is intended for descriptive exploration and decision support, not real-time NHS monitoring. The historical correlation statistics reported below are not dynamically recalculated by the dashboard slicers.
+
+Power BI deliverable: [Open the Power BI project file](powerbi/NHS_Emergency_Department_Performance.pbix) (link becomes active after the .pbix file is uploaded to the repository).
 ## Executive Summary
 
 This project examines historical emergency department (ED) utilization and operational performance across National Health Service (NHS) healthcare organizations in England from **April 2016 through March 2019**.
